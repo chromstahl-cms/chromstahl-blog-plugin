@@ -1,5 +1,6 @@
 package software.kloud.chromstahlblog;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -77,7 +78,7 @@ public class BlogController extends AbsController {
         blogEntry.setPublished(new Date());
         blogEntry.setUser(user);
 
-    blogEntryRepository.save(blogEntry);
+        blogEntryRepository.save(blogEntry);
         return ResponseEntity.ok("success");
     }
 
@@ -94,8 +95,15 @@ public class BlogController extends AbsController {
         }
 
         var blogEntry = blogEntryOptional.get();
+
+        if (!blogEntry.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+                    String.format("User %s is not allowed to modify this blogpost", user.getUserName()));
+        }
+
         blogEntry.setContent(content);
         blogEntry.setPublished(new Date());
+        blogEntryRepository.save(blogEntry);
 
         return ResponseEntity.ok("success");
     }
