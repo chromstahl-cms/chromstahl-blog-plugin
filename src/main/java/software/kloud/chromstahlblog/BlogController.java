@@ -32,7 +32,7 @@ public class BlogController extends AbsController {
     }
 
     @GetMapping("/blog")
-    public ResponseEntity<List<BlogEntryDTO>> hw() {
+    public ResponseEntity<List<BlogEntryDTO>> getAllBlogPosts() {
         return ResponseEntity.ok(blogEntryRepository
                 .findAll()
                 .stream()
