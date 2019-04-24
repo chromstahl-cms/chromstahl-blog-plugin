@@ -86,7 +86,7 @@ public class BlogController extends AbsController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/admin/blog/update/{id}")
-    public ResponseEntity<String> updateEntry(@AuthenticationPrincipal Principal principal, @PathVariable Integer id, BlogRequestDTO requestDTO) {
+    public ResponseEntity<String> updateEntry(@AuthenticationPrincipal Principal principal, @PathVariable Integer id, @RequestBody BlogRequestDTO requestDTO) {
         var user = userRepository.findByUserName(getUsernameFromPrincipal(principal)).orElseThrow(() ->
                 new SecurityException(String.format("not able to map user: %s to database user",
                         getUsernameFromPrincipal(principal))));
