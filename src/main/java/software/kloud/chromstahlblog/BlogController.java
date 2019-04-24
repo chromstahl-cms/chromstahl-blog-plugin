@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import software.kloud.KMSPluginSDK.AbsController;
 import software.kloud.chromstahlblog.dto.BlogEntryDTO;
+import software.kloud.chromstahlblog.dto.BlogRequestDTO;
 import software.kloud.chromstahlblog.persistence.entitites.BlogEntry;
 import software.kloud.chromstahlblog.persistence.entitites.repos.BlogEntryRepository;
 import software.kloud.kms.repositories.UserRepository;
@@ -68,13 +69,14 @@ public class BlogController extends AbsController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/admin/blog/publish")
-    public ResponseEntity<String> publishEntry(@AuthenticationPrincipal Principal principal, @RequestBody String content) {
+    public ResponseEntity<String> publishEntry(@AuthenticationPrincipal Principal principal, @RequestBody BlogRequestDTO requestDTO) {
         var user = userRepository.findByUserName(getUsernameFromPrincipal(principal)).orElseThrow(() ->
                 new SecurityException(String.format("not able to map user: %s to database user",
                         getUsernameFromPrincipal(principal))));
 
         var blogEntry = new BlogEntry();
-        blogEntry.setContent(content);
+        blogEntry.setContent(requestDTO.getContent());
+        blogEntry.setTitle(requestDTO.getTitle());
         blogEntry.setPublished(new Date());
         blogEntry.setUser(user);
 
@@ -84,7 +86,7 @@ public class BlogController extends AbsController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/admin/blog/update/{id}")
-    public ResponseEntity<String> updateEntry(@AuthenticationPrincipal Principal principal, @PathVariable Integer id, String content) {
+    public ResponseEntity<String> updateEntry(@AuthenticationPrincipal Principal principal, @PathVariable Integer id, BlogRequestDTO requestDTO) {
         var user = userRepository.findByUserName(getUsernameFromPrincipal(principal)).orElseThrow(() ->
                 new SecurityException(String.format("not able to map user: %s to database user",
                         getUsernameFromPrincipal(principal))));
@@ -101,7 +103,8 @@ public class BlogController extends AbsController {
                     String.format("User %s is not allowed to modify this blogpost", user.getUserName()));
         }
 
-        blogEntry.setContent(content);
+        blogEntry.setContent(requestDTO.getContent());
+        blogEntry.setTitle(requestDTO.getTitle());
         blogEntry.setPublished(new Date());
         blogEntryRepository.save(blogEntry);
 
