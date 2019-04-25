@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import software.kloud.KMSPluginSDK.AbsController;
+import software.kloud.ChromPluginSDK.AbsController;
 import software.kloud.chromstahlblog.dto.BlogEntryDTO;
 import software.kloud.chromstahlblog.dto.BlogRequestDTO;
 import software.kloud.chromstahlblog.persistence.entitites.BlogEntry;
