@@ -15,6 +15,7 @@ public class BlogEntry {
     )
     private Integer id;
     private String title;
+    @Lob
     private String content;
     private Date published;
 
