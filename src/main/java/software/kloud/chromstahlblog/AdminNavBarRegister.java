@@ -1,9 +1,9 @@
 package software.kloud.chromstahlblog;
 
 import org.springframework.stereotype.Component;
-import software.kloud.KMSPluginSDK.NavBarEntity;
-import software.kloud.KMSPluginSDK.NavBarLinkRegister;
-import software.kloud.KMSPluginSDK.RoleService;
+import software.kloud.ChromPluginSDK.NavBarEntity;
+import software.kloud.ChromPluginSDK.NavBarLinkRegister;
+import software.kloud.ChromPluginSDK.RoleService;
 
 import java.util.List;
 
