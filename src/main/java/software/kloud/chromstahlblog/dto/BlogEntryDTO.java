@@ -5,16 +5,26 @@ import software.kloud.chromstahlblog.persistence.entitites.BlogEntry;
 import java.util.Date;
 
 public class BlogEntryDTO {
+    private int id;
     private String title;
     private Date published;
     private String content;
     private AuthorDTO author;
 
     public BlogEntryDTO(BlogEntry blogEntry) {
+        this.id = blogEntry.getId();
         this.title = blogEntry.getTitle();
         this.published = blogEntry.getPublished();
         this.content = blogEntry.getContent();
         this.author = new AuthorDTO(blogEntry.getUser());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getContent() {

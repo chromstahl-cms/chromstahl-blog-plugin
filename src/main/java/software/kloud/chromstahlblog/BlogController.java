@@ -42,11 +42,12 @@ public class BlogController extends AbsController {
     }
 
     @GetMapping("/blog/entry/{id}")
-    public ResponseEntity<BlogEntry> getBlogEntryById(@PathVariable Integer id) {
+    public ResponseEntity<BlogEntryDTO> getBlogEntryById(@PathVariable Integer id) {
         var entryOptional = blogEntryRepository.findById(id);
 
         if (entryOptional.isPresent()) {
-            return ResponseEntity.ok(entryOptional.get());
+            var dto = entryOptional.map(BlogEntryDTO::new).get();
+            return ResponseEntity.ok(dto);
         }
 
         return ResponseEntity.notFound().build();
