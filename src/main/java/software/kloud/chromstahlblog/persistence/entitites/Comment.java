@@ -1,16 +1,12 @@
 package software.kloud.chromstahlblog.persistence.entitites;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import software.kloud.kms.entities.UserJpaRecord;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-public class BlogEntry {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
@@ -18,34 +14,28 @@ public class BlogEntry {
             unique = true
     )
     private Integer id;
-    private String title;
     @Lob
     private String content;
     private Date published;
 
     @ManyToOne
     private UserJpaRecord user;
+    @ManyToOne
+    private BlogEntry post;
 
-    @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Comment> comments;
+    public Comment() {
+    }
 
-    public BlogEntry(String title, String content, Date published, UserJpaRecord user) {
-        this.title = title;
+    public Comment(
+            String content,
+            Date published,
+            UserJpaRecord user,
+            BlogEntry post
+    ) {
         this.content = content;
         this.published = published;
         this.user = user;
-    }
-
-    public BlogEntry() {
-    }
-
-    public UserJpaRecord getUser() {
-        return user;
-    }
-
-    public void setUser(UserJpaRecord user) {
-        this.user = user;
+        this.post = post;
     }
 
     public Integer getId() {
@@ -54,14 +44,6 @@ public class BlogEntry {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
@@ -80,11 +62,19 @@ public class BlogEntry {
         this.published = published;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public UserJpaRecord getUser() {
+        return user;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setUser(UserJpaRecord user) {
+        this.user = user;
+    }
+
+    public BlogEntry getPost() {
+        return post;
+    }
+
+    public void setPost(BlogEntry post) {
+        this.post = post;
     }
 }
