@@ -1,4 +1,4 @@
-package software.kloud.chromstahlblog;
+package software.kloud.chromstahlblog.navbar;
 
 import org.springframework.stereotype.Component;
 import software.kloud.ChromPluginSDK.NavBarEntity;
@@ -18,7 +18,8 @@ public class AdminNavBarRegister implements NavBarLinkRegister {
     @Override
     public List<NavBarEntity> register() {
         return List.of(
-                new NavBarEntity("New blog post", "/admin/blog/new", roleService.getAdminRole())
+                new NavBarEntity("New blog post", "/admin/blog/new", roleService.getAdminRole()),
+                new NavBarEntity("New page", "/admin/page/new", roleService.getAdminRole())
         );
     }
 }
